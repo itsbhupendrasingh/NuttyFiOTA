@@ -4,6 +4,7 @@
 
 const char* ssid = "Nuttyfi";
 const char* password = "Nuttyfi123";
+const char* hostname = "NuttyFi";
 
 void NuttyFi_OTA() {
   Serial.begin(115200);
@@ -12,6 +13,9 @@ void NuttyFi_OTA() {
   // Set up WiFi as an Access Point
   WiFi.mode(WIFI_AP);
   WiFi.softAP(ssid, password);
+
+  // Set the hostname
+  ArduinoOTA.setHostname(hostname);
 
   Serial.print("IP address: ");
   Serial.println(WiFi.softAPIP());
