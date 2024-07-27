@@ -36,12 +36,8 @@ void NuttyFi_OTA() {
   });
 
   ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
-    static int lastProgress = -1;
     int percentage = (progress * 100) / total;
-    if (percentage != lastProgress) {
-      Serial.printf("Progress: %d%%\n", percentage);
-      lastProgress = percentage;
-    }
+    Serial.printf("Progress: %d%%\r", percentage);
   });
 
   ArduinoOTA.onError([](ota_error_t error) {
