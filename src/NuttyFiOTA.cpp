@@ -36,7 +36,7 @@ void NuttyFi_OTA() {
   });
 
   ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
-    Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
+    Serial.printf("Progress: %u%%\r", (progress * 100 / total));
   });
 
   ArduinoOTA.onError([](ota_error_t error) {
