@@ -1,0 +1,13 @@
+# Arduino-related files
+*.cpp~
+*.h~
+*.d
+*.elf
+*.bin
+*.hex
+*.eep
+*.map
+*.sym
+*.lss
+*.o
+.vscode
