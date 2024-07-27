@@ -6,6 +6,8 @@ const char* ssid = "Nuttyfi";
 const char* password = "Nuttyfi123";
 const char* hostname = "NuttyFi";
 
+bool userConnected = false;
+
 void NuttyFi_OTA() {
   Serial.begin(115200);
   Serial.println("Bootloader started");
@@ -48,10 +50,37 @@ void NuttyFi_OTA() {
     else if (error == OTA_END_ERROR) Serial.println("End Failed");
   });
 
+  // Start WiFi event handler
+  WiFi.onSoftAPModeStationConnected([](const WiFiEventSoftAPModeStationConnected& evt) {
+    Serial.println("User connected to Nuttyfi WiFi");
+    userConnected = true;
+  });
+
+  WiFi.onSoftAPModeStationDisconnected([](const WiFiEventSoftAPModeStationDisconnected& evt) {
+    Serial.println("User disconnected from Nuttyfi WiFi");
+    userConnected = false;
+  });
+
   ArduinoOTA.begin();
   Serial.println("OTA Ready");
+
+  pinMode(D4, OUTPUT); // Initialize the LED_BUILTIN pin as an output
 }
 
 void NuttyFi_OTA_Handle() {
   ArduinoOTA.handle();
+
+  if (userConnected) {
+    // Fade the LED
+    for (int i = 0; i < 256; i++) {
+      analogWrite(D4, i);
+      delay(5);
+    }
+    for (int i = 255; i >= 0; i--) {
+      analogWrite(D4, i);
+      delay(5);
+    }
+  } else {
+    analogWrite(D4, 0); // Ensure the LED is off when no user is connected
+  }
 }
