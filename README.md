@@ -33,10 +33,8 @@ Include the library in your sketch and initialize the OTA functionality:
 ```cpp
 #include <NuttyFiOTA.h>
 
-const char* password = "Nuttyfi123";
-
 void setup() {
-  NuttyFi_OTA(password); // Initialize OTA with password
+  NuttyFi_OTA(); // Initialize OTA
 
   pinMode(D4, OUTPUT); // Initialize the LED_BUILTIN pin as an output
 }
