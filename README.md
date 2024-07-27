@@ -30,6 +30,19 @@ NuttyFiOTA is a library that provides Over-The-Air (OTA) update functionality fo
 
 Include the library in your sketch and initialize the OTA functionality:
 
+## OTA Password
+
+When uploading code through OTA, you may be prompted for a password. The default password is set in the NuttyFiOTA library. Ensure you use the correct password when prompted.
+
+**Default OTA Password**: `Nuttyfi123`
+
+If you want to change the default OTA password, modify the NuttyFiOTA.cpp file accordingly.
+License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Test Code 
+
 ```cpp
 #include <NuttyFiOTA.h>
 
@@ -47,3 +60,6 @@ void loop() {
   digitalWrite(D4, LOW);  // Turn the LED off by making the voltage LOW
   delay(500);             // Wait for half a second
 }
+
+
+
