@@ -3,7 +3,6 @@
 const int ledPin = 2;  // D4 pin
 void setup() {
   NuttyFi_OTA();  // Initialize OTA
-  pinMode(ledPin, OUTPUT);  // Set the ledPin as an output
 }
 
 void loop() {
