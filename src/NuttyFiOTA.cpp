@@ -6,7 +6,19 @@ const char* ssid = "Nuttyfi";
 const char* password = "Nuttyfi123";
 const char* hostname = "NuttyFi";
 
-bool userConnected = false;
+bool wasConnected = false;  // To track connection state
+
+void fadeLED() {
+  for (int brightness = 0; brightness <= 1023; brightness++) {
+    analogWrite(D4, 1023 - brightness);
+    delay(5);  // Delay to see the fading effect
+  }
+
+  for (int brightness = 1023; brightness >= 0; brightness--) {
+    analogWrite(D4, 1023 - brightness);
+    delay(5);  // Delay to see the fading effect
+  }
+}
 
 void NuttyFi_OTA() {
   Serial.begin(115200);
@@ -50,17 +62,6 @@ void NuttyFi_OTA() {
     else if (error == OTA_END_ERROR) Serial.println("End Failed");
   });
 
-  // Start WiFi event handler
-  WiFi.onSoftAPModeStationConnected([](const WiFiEventSoftAPModeStationConnected& evt) {
-    Serial.println("User connected to Nuttyfi WiFi");
-    userConnected = true;
-  });
-
-  WiFi.onSoftAPModeStationDisconnected([](const WiFiEventSoftAPModeStationDisconnected& evt) {
-    Serial.println("User disconnected from Nuttyfi WiFi");
-    userConnected = false;
-  });
-
   ArduinoOTA.begin();
   Serial.println("OTA Ready");
 
@@ -70,17 +71,14 @@ void NuttyFi_OTA() {
 void NuttyFi_OTA_Handle() {
   ArduinoOTA.handle();
 
-  if (userConnected) {
-    // Fade the LED
-    for (int i = 0; i < 256; i++) {
-      analogWrite(D4, i);
-      delay(5);
-    }
-    for (int i = 255; i >= 0; i--) {
-      analogWrite(D4, i);
-      delay(5);
+  // Check WiFi connection status
+  if (WiFi.softAPgetStationNum() > 0) {
+    if (!wasConnected) {
+      Serial.println("Device connected to WiFi");
+      fadeLED();  // Start fading LED when a device connects
+      wasConnected = true;
     }
   } else {
-    analogWrite(D4, 0); // Ensure the LED is off when no user is connected
+    wasConnected = false;  // Reset connection state when no devices are connected
   }
 }
