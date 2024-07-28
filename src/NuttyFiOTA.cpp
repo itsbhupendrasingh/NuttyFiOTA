@@ -6,9 +6,20 @@ const char* ssid = "Nuttyfi";
 const char* password = "Nuttyfi123";
 const char* hostname = "NuttyFi";
 
+void printVersion() {
+  Serial.println(F("\n\n"));
+  Serial.println(F("****************************************************"));
+  Serial.println(F("*                                                  *"));
+  Serial.println(F("*              NuttyFi OTA V1.0.0                  *"));
+  Serial.println(F("*                                                  *"));
+  Serial.println(F("****************************************************"));
+  Serial.println(F("\n\n"));
+}
+
 void NuttyFi_OTA() {
   Serial.begin(115200);
-  printBanner(); // Print the banner
+  printVersion();
+  Serial.println("Bootloader started");
 
   // Set up WiFi as an Access Point
   WiFi.mode(WIFI_AP);
@@ -54,13 +65,4 @@ void NuttyFi_OTA() {
 
 void NuttyFi_OTA_Handle() {
   ArduinoOTA.handle();
-}
-
-void printBanner() {
-  Serial.println(" ___  _  _          _ ");
-  Serial.println("/ _ \\| || | _____  | |_ ");
-  Serial.println("| (_) | || |/ _ \\ \\ / / ");
-  Serial.println("\\__\\_\\_| |_\\___/_\\_\\  ");
-  Serial.println("NuttyFi OTA");
-  Serial.println("         v1.0.0");
 }
