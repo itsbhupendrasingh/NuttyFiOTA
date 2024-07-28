@@ -6,7 +6,8 @@ const char* ssid = "Nuttyfi";
 const char* password = "Nuttyfi123";
 const char* hostname = "NuttyFi";
 
-bool wasConnected = false;  // To track connection state
+unsigned long previousMillis = 0;  // Store the last time LED was faded
+const long interval = 5000;        // Interval at which to fade the LED (5 seconds)
 
 void fadeLED() {
   for (int brightness = 0; brightness <= 1023; brightness++) {
@@ -73,12 +74,11 @@ void NuttyFi_OTA_Handle() {
 
   // Check WiFi connection status
   if (WiFi.softAPgetStationNum() > 0) {
-    if (!wasConnected) {
-      Serial.println("Device connected to WiFi");
-      fadeLED();  // Start fading LED when a device connects
-      wasConnected = true;
+    unsigned long currentMillis = millis();
+    if (currentMillis - previousMillis >= interval) {
+      previousMillis = currentMillis;
+      Serial.println("Fading LED");
+      fadeLED();  // Start fading LED every 5 seconds
     }
-  } else {
-    wasConnected = false;  // Reset connection state when no devices are connected
   }
 }
