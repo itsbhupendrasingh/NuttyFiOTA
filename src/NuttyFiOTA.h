@@ -3,5 +3,6 @@
 
 void NuttyFi_OTA();
 void NuttyFi_OTA_Handle();
+void printBanner();
 
 #endif
