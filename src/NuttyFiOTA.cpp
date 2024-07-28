@@ -6,21 +6,6 @@ const char* ssid = "Nuttyfi";
 const char* password = "Nuttyfi123";
 const char* hostname = "NuttyFi";
 
-unsigned long previousMillis = 0;  // Store the last time LED was faded
-const long interval = 5000;        // Interval at which to fade the LED (5 seconds)
-
-void fadeLED() {
-  for (int brightness = 0; brightness <= 1023; brightness++) {
-    analogWrite(D4, 1023 - brightness);
-    delay(5);  // Delay to see the fading effect
-  }
-
-  for (int brightness = 1023; brightness >= 0; brightness--) {
-    analogWrite(D4, 1023 - brightness);
-    delay(5);  // Delay to see the fading effect
-  }
-}
-
 void NuttyFi_OTA() {
   Serial.begin(115200);
   Serial.println("Bootloader started");
@@ -65,20 +50,8 @@ void NuttyFi_OTA() {
 
   ArduinoOTA.begin();
   Serial.println("OTA Ready");
-
-  pinMode(D4, OUTPUT); // Initialize the LED_BUILTIN pin as an output
 }
 
 void NuttyFi_OTA_Handle() {
   ArduinoOTA.handle();
-
-  // Check WiFi connection status
-  if (WiFi.softAPgetStationNum() > 0) {
-    unsigned long currentMillis = millis();
-    if (currentMillis - previousMillis >= interval) {
-      previousMillis = currentMillis;
-      Serial.println("Fading LED");
-      fadeLED();  // Start fading LED every 5 seconds
-    }
-  }
 }
