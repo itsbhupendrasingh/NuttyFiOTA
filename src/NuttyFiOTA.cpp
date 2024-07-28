@@ -19,6 +19,7 @@ void printVersion() {
 void NuttyFi_OTA() {
   Serial.begin(115200);
   printVersion();
+  delay(1000); // Wait for 1 second to display the banner
   Serial.println("Bootloader started");
 
   // Set up WiFi as an Access Point
