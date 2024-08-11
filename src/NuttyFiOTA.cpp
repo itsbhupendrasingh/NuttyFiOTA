@@ -1,10 +1,11 @@
 #include <ESP8266WiFi.h>
 #include <ArduinoOTA.h>
+#include <ESP8266mDNS.h>
 #include "NuttyFiOTA.h"
 
 const char* ssid = "Nuttyfi";
 const char* password = "Nuttyfi123";
-const char* hostname = "NuttyFi";
+const char* hostname = "NuttyFi-OTA";  // Updated hostname to make it more descriptive
 
 void printVersion() {
   Serial.println(F("\n\n"));
@@ -28,6 +29,16 @@ void NuttyFi_OTA() {
 
   // Set the hostname
   ArduinoOTA.setHostname(hostname);
+
+  // Start mDNS service with additional service text
+  if (MDNS.begin(hostname)) {
+    Serial.println("mDNS responder started");
+    // Advertise a custom service with descriptive text
+    MDNS.addService("arduino", "tcp", 8266);
+    MDNS.addServiceTxt("arduino", "tcp", "description", "NuttyFi OTA (Over the Air) Wireless Firmware");
+    MDNS.addServiceTxt("arduino", "tcp", "board", "NodeMCU ESP8266");
+    MDNS.addServiceTxt("arduino", "tcp", "firmware", "v1.0.0");
+  }
 
   Serial.print("IP address: ");
   Serial.println(WiFi.softAPIP());
