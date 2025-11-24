@@ -1,6 +1,10 @@
 # NuttyFiOTA
 
-NuttyFiOTA is a library that provides Over-The-Air (OTA) update functionality for the Nuttyfi board based on the ESP8266. This library allows you to easily add OTA update capability to your projects, making it possible to update firmware wirelessly without needing physical access to the device.
+[![GitHub release](https://img.shields.io/github/v/release/itsbhupendrasingh/NuttyFiOTA)](https://github.com/itsbhupendrasingh/NuttyFiOTA/releases/latest)
+[![Release date](https://img.shields.io/github/release-date/itsbhupendrasingh/NuttyFiOTA)](https://github.com/itsbhupendrasingh/NuttyFiOTA/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/itsbhupendrasingh/NuttyFiOTA/latest/total)](https://github.com/itsbhupendrasingh/NuttyFiOTA/releases/latest)
+
+NuttyFiOTA is a library that provides Over-The-Air (OTA) update functionality for the NuttyFi board based on the ESP8266. This library allows you to easily add OTA update capability to your projects, making it possible to update firmware wirelessly without needing physical access to the device.
 
 ## Features
 
@@ -11,24 +15,34 @@ NuttyFiOTA is a library that provides Over-The-Air (OTA) update functionality fo
 ## Installation
 
 ### Via Arduino Library Manager
-
-**Coming soon!** Stay tuned for updates.
+Coming soon.
 
 ### Manual Installation
 
-1. **Download the ZIP File**:
-   - Go to [NuttyFiOTA](https://github.com/itsbhupendrasingh/NuttyFiOTA).
-   - Click on the `Code` button and select `Download ZIP`.
+1. Download the ZIP file:
+   - Go to https://github.com/itsbhupendrasingh/NuttyFiOTA
+   - Click the "Code" button and select "Download ZIP"
 
-2. **Add the Library to Arduino IDE**:
-   - Open the Arduino IDE.
-   - Go to `Sketch` > `Include Library` > `Add .ZIP Library...`.
-   - Navigate to the location where you downloaded the ZIP file and select it.
-   - The library will be added to the Arduino IDE.
+2. Add the library to Arduino IDE:
+   - Open the Arduino IDE
+   - Go to `Sketch` > `Include Library` > `Add .ZIP Library...`
+   - Select the downloaded ZIP file
 
 ## Usage
 
 Include the library in your sketch and initialize the OTA functionality:
+
+```cpp
+#include <NuttyFiOTA.h>
+
+void setup() {
+  NuttyFi_OTA(); // Initialize OTA
+}
+
+void loop() {
+  NuttyFi_OTA_Handle(); // Handle OTA updates
+}
+```
 
 ## OTA Password
 
@@ -36,12 +50,14 @@ When uploading code through OTA, you may be prompted for a password. The default
 
 **Default OTA Password**: `Nuttyfi123`
 
-If you want to change the default OTA password, modify the NuttyFiOTA.cpp file accordingly.
-License
+To change the password, modify the 'NuttyFiOTA.cpp' file:
+```ArduinoOTA.setPassword("YourNewPassword"); ```
+
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Example 
+## Examples 
 
 ## Blink
 
